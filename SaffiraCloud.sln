@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaffiraCloud.WebApp", "src\SaffiraCloud.WebApp\SaffiraCloud.WebApp.csproj", "{C3AE88AE-30D5-4360-903E-3FC0FDF9330D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaffiraCloud.ApplicationCore", "src\SaffiraCloud.ApplicationCore\SaffiraCloud.ApplicationCore.csproj", "{559F3753-C5E8-433B-B160-7586A8E3BFB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaffiraCloud.Infra.Data", "src\SaffiraCloud.Infra.Data\SaffiraCloud.Infra.Data.csproj", "{062ED53C-F4DA-4381-A566-BD0431B5092B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaffiraCloud.Service", "src\SaffiraCloud.Service\SaffiraCloud.Service.csproj", "{8D804699-2EC8-4B47-8B83-F3384D8575E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaffiraCloud.Infra.CrossCutting.IoC", "src\SaffiraCloud.Infra.CrossCutting.IoC\SaffiraCloud.Infra.CrossCutting.IoC.csproj", "{EB616D1E-96CE-44E9-ABBE-AE7E4B8CBDA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaffiraCloud.Infra.CrossCutting.Identity", "src\SaffiraCloud.Infra.CrossCutting.Identity\SaffiraCloud.Infra.CrossCutting.Identity.csproj", "{975BACC6-EE63-45F2-AA78-878695DA4F0A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C3AE88AE-30D5-4360-903E-3FC0FDF9330D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3AE88AE-30D5-4360-903E-3FC0FDF9330D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3AE88AE-30D5-4360-903E-3FC0FDF9330D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3AE88AE-30D5-4360-903E-3FC0FDF9330D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{559F3753-C5E8-433B-B160-7586A8E3BFB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{559F3753-C5E8-433B-B160-7586A8E3BFB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{559F3753-C5E8-433B-B160-7586A8E3BFB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{559F3753-C5E8-433B-B160-7586A8E3BFB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{062ED53C-F4DA-4381-A566-BD0431B5092B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{062ED53C-F4DA-4381-A566-BD0431B5092B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{062ED53C-F4DA-4381-A566-BD0431B5092B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{062ED53C-F4DA-4381-A566-BD0431B5092B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D804699-2EC8-4B47-8B83-F3384D8575E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D804699-2EC8-4B47-8B83-F3384D8575E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D804699-2EC8-4B47-8B83-F3384D8575E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D804699-2EC8-4B47-8B83-F3384D8575E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB616D1E-96CE-44E9-ABBE-AE7E4B8CBDA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB616D1E-96CE-44E9-ABBE-AE7E4B8CBDA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB616D1E-96CE-44E9-ABBE-AE7E4B8CBDA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB616D1E-96CE-44E9-ABBE-AE7E4B8CBDA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{975BACC6-EE63-45F2-AA78-878695DA4F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{975BACC6-EE63-45F2-AA78-878695DA4F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{975BACC6-EE63-45F2-AA78-878695DA4F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{975BACC6-EE63-45F2-AA78-878695DA4F0A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {07171AD0-8FA1-40DE-A892-E694E66F628B}
+	EndGlobalSection
+EndGlobal
