@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SaffiraCloud.ApplicationCore.Interfaces.Services;
 
 namespace SaffiraCloud.WebApp.Controllers
 {
     public class PaisController : Controller
     {
+        private readonly IPaisService _pais;
+
+        public PaisController(IPaisService pais)
+        {
+            _pais = pais;
+        }
+
         // GET: Pais
         public ActionResult Index()
         {
