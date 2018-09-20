@@ -12,7 +12,7 @@ namespace SaffiraCloud.Infra.Data.Repositories
 {
     public class EFRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
-        protected readonly ApplicationContext _db = new ApplicationContext();
+        protected readonly BaseContext _db = new BaseContext();
 
         public async Task Delete(T entity)
         {

@@ -11,7 +11,7 @@ namespace SaffiraCloud.Infra.CrossCutting.IoC
     {
         public static void RegisterServices(IServiceCollection services)
         {
-            services.AddScoped<ApplicationContext>();
+            services.AddScoped<BaseContext>();
 
             services.AddScoped<IPaisRepository, PaisRepository>();
 

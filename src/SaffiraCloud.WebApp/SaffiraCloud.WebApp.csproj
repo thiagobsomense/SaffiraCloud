@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
@@ -13,6 +17,10 @@
     <ProjectReference Include="..\SaffiraCloud.ApplicationCore\SaffiraCloud.ApplicationCore.csproj" />
     <ProjectReference Include="..\SaffiraCloud.Infra.CrossCutting.IoC\SaffiraCloud.Infra.CrossCutting.IoC.csproj" />
     <ProjectReference Include="..\SaffiraCloud.Infra.Data\SaffiraCloud.Infra.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="bundleconfig.json" />
   </ItemGroup>
 
 </Project>

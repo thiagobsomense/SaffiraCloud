@@ -4,7 +4,7 @@ using SaffiraCloud.Infra.Data.Extensions;
 
 namespace SaffiraCloud.Infra.Data.Context
 {
-    public class ApplicationContext : DbContext
+    public class BaseContext : DbContext
     {
         public DbSet<Pais> Paises { get; set; }
 

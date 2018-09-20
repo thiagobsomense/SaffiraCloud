@@ -7,7 +7,7 @@ using SaffiraCloud.Infra.Data.Context;
 
 namespace SaffiraCloud.Infra.Data.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
+    [DbContext(typeof(BaseContext))]
     partial class ApplicationContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -8,7 +8,7 @@ using SaffiraCloud.Infra.Data.Context;
 
 namespace SaffiraCloud.Infra.Data.Migrations
 {
-    [DbContext(typeof(ApplicationContext))]
+    [DbContext(typeof(BaseContext))]
     [Migration("20180919183134_Initial")]
     partial class Initial
     {
