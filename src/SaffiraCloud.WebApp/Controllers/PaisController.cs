@@ -1,6 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SaffiraCloud.ApplicationCore.Entities;
 using SaffiraCloud.ApplicationCore.Interfaces.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic;
+using System.Threading.Tasks;
 
 namespace SaffiraCloud.WebApp.Controllers
 {
@@ -14,9 +20,37 @@ namespace SaffiraCloud.WebApp.Controllers
         }
 
         // GET: Pais
-        public ActionResult Index()
+        public async Task<IActionResult> Index(int page = 1, string sort = "Nome", string sortOrder = "asc", string searchPhrase = "")
         {
-            return View();
+            int pageSize = 10;
+            int totalRecord = 0;
+            if (page < 1) page = 1;
+            int skip = (page * pageSize) - pageSize;
+            var data = await GetPaisAsync(searchPhrase, sort, sortOrder, skip, pageSize, totalRecord);
+
+            return View(data);
+        }
+
+        public async Task<List<Pais>> GetPaisAsync(string searchPhrase, string sort, string sortOrder, int skip, int pageSize, int totalRecord)
+        {
+            try
+            {
+                var paises = await _pais.GetAll();
+
+                if (!string.IsNullOrWhiteSpace(searchPhrase))
+                    paises = paises.Where("nome.Contains(@0) OR codigoIBGE == @0 OR codigoISO.Contains(@0)", searchPhrase).ToList();
+
+                if (pageSize > 0)
+                    paises = paises.OrderBy(string.Format("{0} {1}", sort, sortOrder)).Skip(skip).Take(pageSize).ToList();
+
+                totalRecord = paises.Count;
+
+                return paises.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
         // GET: Pais/Details/5

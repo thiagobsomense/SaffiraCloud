@@ -1,0 +1,134 @@
+﻿@model IEnumerable<SaffiraCloud.ApplicationCore.Entities.Pais>
+
+@{
+    ViewData["Title"] = "Paises";
+}
+
+@section panels {
+    <div class="panel-header panel-header-sm"></div>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">@ViewData["Title"]</h4>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple no-caret" data-toggle="dropdown">
+                        <i class="now-ui-icons loader_gear"></i>
+                        Ações
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-left">
+                        <a asp-action="Create" class="dropdown-item">Adicionar</a>
+                        <a asp-action="Create" class="dropdown-item">Importar</a>
+                        <a asp-action="Create" class="dropdown-item">Exportar</a>
+                        <a asp-action="Create" class="dropdown-item">Imprimir</a>
+                        <div class="dropdown-divider"></div>
+                        <a asp-action="Create" class="dropdown-item text-danger">Excluir</a>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group form-inline">
+                            <label for="ControlPageSize" style="padding-right: 10px">Registros por página</label>
+                            <select class="form-control" id="ControlPageSize">
+                                <option>10</option>
+                                <option>25</option>
+                                <option>50</option>
+                                <option>100</option>
+                                <option value="-1">Todos</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <form>
+                            <div class="input-group no-border" id="ControlSearch">
+                                <input type="text" value="" class="form-control" placeholder="Pesquisar...">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <i class="now-ui-icons ui-1_zoom-bold"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="text-primary">
+                            <tr>
+                                <th>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" value="">
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Nome)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CodigoIBGE)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CodigoISO)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DtCadastro)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DtAtualizado)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" value="">
+                                                <span class="form-check-sign">
+                                                    <span class="check"></span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nome)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CodigoIBGE)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CodigoISO)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DtCadastro)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DtAtualizado)
+                                    </td>
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-round btn-info btn-icon btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-round btn-success btn-icon btn-sm"><i class="fas fa-table"></i></a>
+                                        <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-round btn-danger btn-icon btn-sm"><i class="fas fa-times"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
