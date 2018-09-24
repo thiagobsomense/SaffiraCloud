@@ -32,13 +32,9 @@
                     <div class="col-md-4">
                         <div class="form-group form-inline">
                             <label for="ControlPageSize" style="padding-right: 10px">Registros por página</label>
-                            <select class="form-control" id="ControlPageSize">
-                                <option>10</option>
-                                <option>25</option>
-                                <option>50</option>
-                                <option>100</option>
-                                <option value="-1">Todos</option>
-                            </select>
+                            <form>
+                                <select class="form-control" id="ControlPageSize" asp-items="ViewBag.PageSize"></select>
+                            </form>
                         </div>
                     </div>
                     <div class="col-md-4"></div>
@@ -72,19 +68,29 @@
                                     </div>
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Nome)
+                                    <a asp-action="Index" asp-route-sort="Nome" asp-route-sortOrder="@ViewBag.SortOrder">
+                                        @Html.DisplayNameFor(model => model.Nome)
+                                    </a>
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.CodigoIBGE)
+                                    <a asp-action="Index" asp-route-sort="CodigoIBGE" asp-route-sortOrder="@ViewBag.SortOrder">
+                                        @Html.DisplayNameFor(model => model.CodigoIBGE)
+                                    </a>
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.CodigoISO)
+                                    <a asp-action="Index" asp-route-sort="CodigoISO" asp-route-sortOrder="@ViewBag.SortOrder">
+                                        @Html.DisplayNameFor(model => model.CodigoISO)
+                                    </a>
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.DtCadastro)
+                                    <a asp-action="Index" asp-route-sort="DtCadastro" asp-route-sortOrder="@ViewBag.SortOrder">
+                                        @Html.DisplayNameFor(model => model.DtCadastro)
+                                    </a>
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.DtAtualizado)
+                                    <a asp-action="Index" asp-route-sort="DtAtualizado" asp-route-sortOrder="@ViewBag.SortOrder">
+                                        @Html.DisplayNameFor(model => model.DtAtualizado)
+                                    </a>
                                 </th>
                                 <th></th>
                             </tr>

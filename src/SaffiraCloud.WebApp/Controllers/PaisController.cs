@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SaffiraCloud.ApplicationCore.Entities;
 using SaffiraCloud.ApplicationCore.Interfaces.Services;
 using System;
@@ -20,7 +21,7 @@ namespace SaffiraCloud.WebApp.Controllers
         }
 
         // GET: Pais
-        public async Task<IActionResult> Index(int page = 1, string sort = "Nome", string sortOrder = "asc", string searchPhrase = "")
+        public async Task<IActionResult> Index(int page = 1, string sort = "Nome", string sortOrder = "", string searchPhrase = "")
         {
             int pageSize = 10;
             int totalRecord = 0;
@@ -35,15 +36,29 @@ namespace SaffiraCloud.WebApp.Controllers
         {
             try
             {
+                ViewBag.SortOrder = String.IsNullOrEmpty(sortOrder) ? "desc" : "";
+
                 var paises = await _pais.GetAll();
+
+                totalRecord = paises.Count;
+                ViewBag.TotalRecord = totalRecord;
+
+                SelectList pageSizeItems = new SelectList(new object[]
+                {
+                    new { Name = "10", Value = 10 },
+                    new { Name = "25", Value = 25 },
+                    new { Name = "50", Value = 50 },
+                    new { Name = "100", Value = 100 },
+                    new { Name = "Todos", Value = totalRecord }
+                }, "Value", "Name");
+
+                ViewBag.PageSize = pageSizeItems;
 
                 if (!string.IsNullOrWhiteSpace(searchPhrase))
                     paises = paises.Where("nome.Contains(@0) OR codigoIBGE == @0 OR codigoISO.Contains(@0)", searchPhrase).ToList();
 
                 if (pageSize > 0)
                     paises = paises.OrderBy(string.Format("{0} {1}", sort, sortOrder)).Skip(skip).Take(pageSize).ToList();
-
-                totalRecord = paises.Count;
 
                 return paises.ToList();
             }
