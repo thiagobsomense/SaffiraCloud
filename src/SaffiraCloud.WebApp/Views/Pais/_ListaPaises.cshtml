@@ -1,13 +1,5 @@
 ﻿@model IEnumerable<SaffiraCloud.ApplicationCore.Entities.Pais>
 
-@{
-    ViewData["Title"] = "Paises";
-}
-
-@section panels {
-    <div class="panel-header panel-header-sm"></div>
-}
-
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -31,7 +23,7 @@
                         </div>
                     </div>
                 </div>
-                <table id="gridPais" class="table table-striped" cellspacing="0" width="100%">
+                <table id="gridPais" class="table" cellspacing="0" width="100%">
                     <thead class="text-primary">
                         <tr>
                             <th>@Html.DisplayNameFor(model => model.Nome)</th>
@@ -39,9 +31,26 @@
                             <th>@Html.DisplayNameFor(model => model.CodigoISO)</th>
                             <th>@Html.DisplayNameFor(model => model.DtCadastro)</th>
                             <th>@Html.DisplayNameFor(model => model.DtAtualizado)</th>
-                            <th>Ações</th>
+                            <th class="disabled-sorting">Ações</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CodigoIBGE)</td>
+                                <td>@Html.DisplayFor(modelItem => item.CodigoISO)</td>
+                                <td>@Html.DisplayFor(modelItem => item.DtCadastro)</td>
+                                <td>@Html.DisplayFor(modelItem => item.DtAtualizado)</td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-round btn-info btn-icon btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                    <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-round btn-success btn-icon btn-sm"><i class="fas fa-table"></i></a>
+                                    <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-round btn-danger btn-icon btn-sm"><i class="fas fa-times"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -56,58 +65,12 @@
 
         $(document).ready(configurarControles());
 
-        $("#gridPais_filter label").addClass("input-group no-border");
-
         function configurarControles() {
             $("#gridPais").DataTable({
-                processing: true,
-                serverSide: true,
                 lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "Todos"]],
-                filter: true,
                 responsive: true,
-                order: [[0, "asc"]],
                 pagingType: "full_numbers",
-                ajax: {
-                    url: "@Url.Action("GetPaisAsync")",
-                    type: "POST",
-                    dataType: "json"
-                },
-                columnDefs: [
-                    { orderable: false, targets: [5] }
-                ],
-                columns: [
-                    { data: "nome", name: "Nome" },
-                    { data: "codigoIBGE", name: "CodigoIBGE" },
-                    { data: "codigoISO", name: "CodigoISO" },
-                    {
-                        data: "dtCadastro",
-                        name: "DtCadastro",
-                        render: function (data, type, row) {
-                            if (type === "sort" || type === "type") {
-                                return data;
-                            }
-                            return moment(data).format("DD/MM/YYYY HH:mm:ss");
-                        }
-                    },
-                    {
-                        data: "dtAtualizado",
-                        name: "DtAtualizado",
-                        render: function (data, type, row) {
-                            if (type === "sort" || type === "type") {
-                                return data;
-                            }
-                            return moment(data).format("DD/MM/YYYY HH:mm:ss");
-                        }
-                    },
-                    {
-                        data: null, name: "Ação",
-                        render: function (data, type, full, meta, row) {
-                            return '<a href="/Pais/Edit/' + data.id + '" class="btn btn-round btn-info btn-icon btn-sm"><i class="fas fa-pencil-alt"></i></a> ' +
-                                   '<a href="/Pais/Details/' + data.id + '" class="btn btn-round btn-success btn-icon btn-sm"><i class="fas fa-table"></i></a> ' +
-                                   '<a href="javascript:void(0)" onclick=DeleteConfirm(' + data.id + ') class="btn btn-round btn-danger btn-icon btn-sm"><i class="fas fa-times"></i></a>';
-                        }
-                    }
-                ],
+                autoWidth: true,
                 language: {
                     processing: "Processando...",
                     search: "_INPUT_",
@@ -130,28 +93,6 @@
                         sortAscending: ": Ordenar colunas de forma ascendente",
                         sortDescending: ": Ordenar colunas de forma descendente"
                     }
-                }
-            });
-        }
-
-        function DeleteConfirm(PaisID) {
-            if (confirm("Are you sure you want to delete ...?")) {
-                Delete(PaisID);
-            }
-            else {
-                return false;
-            }
-        }
-
-        function Delete(PaisID) {
-            var url = '@Url.Content("~/")' + "Pais/Delete";
-            $.post(url, { id: PaisID }, function (data) {
-                if (data) {
-                    oTable = $('#gridPais').DataTable();
-                    oTable.draw();
-                }
-                else {
-                    alert("Something Went Wrong!");
                 }
             });
         }

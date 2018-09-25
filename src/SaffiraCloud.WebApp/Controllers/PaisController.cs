@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using SaffiraCloud.ApplicationCore.Entities;
 using SaffiraCloud.ApplicationCore.Interfaces.Services;
 using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Dynamic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SaffiraCloud.WebApp.Controllers
@@ -21,46 +20,52 @@ namespace SaffiraCloud.WebApp.Controllers
         }
 
         // GET: Pais
-        public async Task<IActionResult> Index(int page = 1, string sort = "Nome", string sortOrder = "", string searchPhrase = "")
+        public IActionResult Index()
         {
-            int pageSize = 10;
-            int totalRecord = 0;
-            if (page < 1) page = 1;
-            int skip = (page * pageSize) - pageSize;
-            var data = await GetPaisAsync(searchPhrase, sort, sortOrder, skip, pageSize, totalRecord);
-
-            return View(data);
+            return View();
         }
 
-        public async Task<List<Pais>> GetPaisAsync(string searchPhrase, string sort, string sortOrder, int skip, int pageSize, int totalRecord)
+        static string RemoveDiacritics(string text)
+        {
+            return string.Concat(
+                text.Normalize(NormalizationForm.FormD)
+                .Where(ch => CharUnicodeInfo.GetUnicodeCategory(ch) !=
+                                              UnicodeCategory.NonSpacingMark)
+              ).Normalize(NormalizationForm.FormC);
+        }
+
+        public async Task<JsonResult> GetPaisAsync()
         {
             try
             {
-                ViewBag.SortOrder = String.IsNullOrEmpty(sortOrder) ? "desc" : "";
+                var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
+                var start = Request.Form["start"].FirstOrDefault();
+                var length = Request.Form["length"].FirstOrDefault();
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                var searchValue = Request.Form["search[value]"].FirstOrDefault();
+
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                string columnOrdered = string.Format("{0} {1}", sortColumn, sortColumnDirection);
 
                 var paises = await _pais.GetAll();
 
-                totalRecord = paises.Count;
-                ViewBag.TotalRecord = totalRecord;
+                int recordsTotal = paises.Count;
 
-                SelectList pageSizeItems = new SelectList(new object[]
+                if (!string.IsNullOrWhiteSpace(searchValue))
                 {
-                    new { Name = "10", Value = 10 },
-                    new { Name = "25", Value = 25 },
-                    new { Name = "50", Value = 50 },
-                    new { Name = "100", Value = 100 },
-                    new { Name = "Todos", Value = totalRecord }
-                }, "Value", "Name");
+                    paises = paises.Where("nome.ToUpper().Contains(@0) OR codigoIBGE.Contains(@0) OR codigoISO.Contains(@0)", RemoveDiacritics(searchValue.ToUpper())).ToList();
+                }
 
-                ViewBag.PageSize = pageSizeItems;
+                int recordsFiltered = paises.Count;
 
-                if (!string.IsNullOrWhiteSpace(searchPhrase))
-                    paises = paises.Where("nome.Contains(@0) OR codigoIBGE == @0 OR codigoISO.Contains(@0)", searchPhrase).ToList();
+                if (pageSize == -1)
+                    pageSize = recordsTotal;
 
-                if (pageSize > 0)
-                    paises = paises.OrderBy(string.Format("{0} {1}", sort, sortOrder)).Skip(skip).Take(pageSize).ToList();
+                var paisesOrdered = paises.OrderBy(columnOrdered).Skip(skip).Take(pageSize);
 
-                return paises.ToList();
+                return Json(new { draw = draw, recordsFiltered = recordsFiltered, recordsTotal = recordsTotal, data = paisesOrdered });
             }
             catch (Exception ex)
             {
